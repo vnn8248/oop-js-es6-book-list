@@ -24,8 +24,9 @@ UI.prototype.addBookToList = function (book) {
     list.appendChild(row);
 }
 
-// Show Error 
 
+
+// Show alert message: success or error
 UI.prototype.showAlert = function (message, className) {
     // Create div
     const div = document.createElement("div");
@@ -46,6 +47,17 @@ UI.prototype.showAlert = function (message, className) {
     }, 3000);
 }
 
+// Delete book
+UI.prototype.deleteBook = function (target) {
+    // Instantiate UI
+    const ui = new UI();
+
+    if(target.className === "delete") {
+        target.parentElement.parentElement.remove();
+        ui.showAlert("Book removed", "success");
+    } 
+}
+
 // Clear fields 
 UI.prototype.clearFields = function () {
     document.getElementById("title").value = "";
@@ -53,7 +65,7 @@ UI.prototype.clearFields = function () {
     document.getElementById("isbn").value = "";
 }
 
-// Event Listeners
+// Event Listener for add
 document.getElementById("book-form").addEventListener("submit", function(e){
     const title = document.getElementById("title").value,
           author = document.getElementById("author").value,
@@ -82,3 +94,15 @@ document.getElementById("book-form").addEventListener("submit", function(e){
 
     e.preventDefault();
 });
+
+// Event listener for delete
+document.getElementById("book-list").addEventListener("click", function(e) {
+    // Instantiate UI
+    const ui = new UI();
+    // Remove book
+    ui.deleteBook(e.target);
+
+    
+
+    e.preventDefault();
+})
